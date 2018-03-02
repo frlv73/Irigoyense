@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Club.Desktop.Views.Socios.SocioTabUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Club.Desktop.Views.Socios"
+             mc:Ignorable="d" 
+             >
+    <Grid Margin="10,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+        <Label Content="Tabla Socios" HorizontalAlignment="Center" Foreground="WhiteSmoke"/>
+        <Separator></Separator>
+        </StackPanel>
+        <DataGrid
+            x:Name="gridSocios"
+            Grid.Row="1"
+            ItemsSource="{Binding Path=SocioVM.Socios}"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            IsReadOnly="True"
+            SelectedItem="{Binding Path=SocioVM, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+            SelectionMode="Single"
+            
+            >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="30" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="DNI" MinWidth="70" Binding="{Binding DNI}"/>
+                <DataGridTextColumn Header="Nombre" MinWidth="150" Binding="{Binding Nombre}"/>
+                <DataGridTextColumn Header="Direccion" MinWidth="150" Binding="{Binding Direccion}"/>
+                <DataGridTextColumn Header="Localidad" MinWidth="150" Binding="{Binding Localidad}"/>
+                <DataGridTextColumn Header="Fecha Ingreso" Binding="{Binding FechaIngreso}"/>
+                <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Estado}"/>
+                
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <DockPanel Grid.Row="2"  DataContext="{Binding Path=ClientVM}" Height="50" Margin="0,5,0,5">
+            <DockPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="2,0,2,0"/>
+                    <Setter Property="BorderBrush" Value="WhiteSmoke" />
+                    <Setter Property="BorderThickness" Value="2" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="WhiteSmoke" />
+                    <Setter Property="FontFamily" Value="Decker" />
+                    <Setter Property="Width" Value="120" />
+                    <Setter Property="Height" Value="35" />
+                </Style>
+            </DockPanel.Resources>
+            <Button  HorizontalAlignment="Left" ToolTip="Generar cuotas de socio"  Command="{Binding AddCommand}">Generar Cuotas</Button>
+            <Button  HorizontalAlignment="Left" ToolTip="Imprimir lista de socios"  Command="{Binding AddCommand}">Imprimir Lista</Button>
+            <Button  DockPanel.Dock="Right" ToolTip="Agregar un socio"  Command="{Binding AddCommand}">Nuevo</Button>
+            <Button  HorizontalAlignment="Right" ToolTip="Eliminar socio seleccionado"  Command="{Binding DeleteCommand}"> Eliminar</Button>
+            <!--<Button ToolTip="Изменить клиента" Command="{Binding EditCommand}">
+                        <Image Source="..\..\Icons\Change_Icon.png" Width="30"/>
+                    </Button>-->
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,106 @@
+﻿<Window x:Class="Club.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Club.Desktop"
+        xmlns:inf="clr-namespace:Club.Desktop.Infraestructura"
+        mc:Ignorable="d"
+        Title="Club Irigoyense" MaxHeight="500" Width="1024" DataContext="{StaticResource MainViewModel}"
+        MinHeight="500" MinWidth="800" Background="#FF292929" Visibility="Visible" MaxWidth="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl TabStripPlacement="Left" BorderThickness="0" Grid.Row="1" Background="#FF292929">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid>
+                                    <Border  Name="Border" BorderBrush="Green" BorderThickness="0,0,0,0">
+                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="BorderBrush" Value="Green"/>
+                                        <Setter Property="BorderThickness" Value="3,0,3,0"/>
+                                        <Setter Property="FontFamily" Value="Decker"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="MinHeight" Value="100" />
+                                        <Setter Property="MinWidth" Value="100" />
+                                        <Setter Property="Panel.ZIndex" Value="80" />
+                                        <Setter TargetName="Border" Property="Background" Value="#FF292929" />
+                                        <Setter Property="Foreground" Value="Green" />
+                                        <Setter TargetName="Border" Property="BorderThickness" Value="5,0,0,0" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter Property="FontFamily" Value="Decker"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="MinHeight" Value="80" />
+                                        <Setter Property="MinWidth" Value="100" />
+                                        <Setter TargetName="Border" Property="Background" Value="#FF292929" />
+                                        <Setter Property="Foreground" Value="Green"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="Background" Value="Black"></Setter>
+                </Style>
+
+            </TabControl.Resources>
+            <TabItem Content="{Binding Path=CuentaUC}">
+                <TabItem.Header>
+                    <StackPanel>
+                        <Image Source="Iconos\icons8_US_Dollar_32px.png"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Cuentas</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem Content="{Binding Path=SocioUC}">
+                <TabItem.Header>
+                    <StackPanel>
+                        <Image Source="Iconos\icons8_Group_32px.png"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Socios</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem  Content="{Binding Path=CuotaUC}">
+                <TabItem.Header>
+                    <StackPanel>
+                        <Image Source="Iconos\icons8_Bill_32px.png"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Cuotas</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem Content="{Binding Path=InfoUC}">
+                <TabItem.Header>
+                    <StackPanel>
+                        <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="Iconos\icons8_Info_32px.png"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Info</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+
+        <TextBlock Foreground="Green" FontFamily="Decker"  FontSize="15" VerticalAlignment="Center" Margin="10,0,0,0">Club Irigoyense</TextBlock>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="BtnMin" Background="Transparent" Width="35" Height="30" HorizontalAlignment="Right" Click="Button_Click" BorderThickness="0" Margin="0,0,5,0">
+
+                <Image Margin="0,-8,0,-3" Source="Iconos\icons8_Expand_Arrow_32px.png" />
+
+
+            </Button>
+            <Button x:Name="BtnCls" Background="Transparent" Width="35" Height="30" HorizontalAlignment="Right" Click="Button_Click_1" BorderThickness="0" Margin="0,0,5,0">
+                <Image Source="Iconos\icons8_Delete_32px.png"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

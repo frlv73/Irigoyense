@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Club.Desktop.ViewModels.Socios
@@ -43,7 +44,7 @@ namespace Club.Desktop.ViewModels.Socios
         {
             _nombreConn = nombreConexion;
             this.service = new SocioService(nombreConexion);
-            Socios = service.BuscarTodos();
+            Socios = service.BuscarSociosActivos();
         }
         #endregion
 
@@ -53,8 +54,8 @@ namespace Club.Desktop.ViewModels.Socios
 
         private void Agregar(Object obj)
         {
-            var dialogVM = new AgregarSocioDialogViewModel(_nombreConn);
-            var dialogWindow = new AgregarSocioDialog(dialogVM);
+            var dialogVM = new AgregarEditarSocioDialogViewModel(null, _nombreConn);
+            var dialogWindow = new AgregarEditarSocioDialog(dialogVM);
             dialogWindow.ShowDialog();
             if(dialogWindow.DialogResult == true)
             {
@@ -64,7 +65,7 @@ namespace Club.Desktop.ViewModels.Socios
                 }
                 catch(Exception e)
                 {
-                    NLog.LogManager.GetCurrentClassLogger().Error(e, "Se produjo un error");
+                    NLog.LogManager.GetCurrentClassLogger().Error(e, "Se produjo un error al insertar el socio");
                 }
 
             }
@@ -84,12 +85,57 @@ namespace Club.Desktop.ViewModels.Socios
             }
             catch(Exception e)
             {
-                NLog.LogManager.GetCurrentClassLogger().Error(e, "Se produjo un error");
+                NLog.LogManager.GetCurrentClassLogger().Error(e, "Se produjo un error al borrar el socio");
             }
 
             ActualizarSocios();
 
         }
+
+        private ICommand editCommand = null;
+
+        public ICommand EditCommand =>
+            editCommand ?? (editCommand = new RelayCommand(Actualizar, s => null != SocioSeleccionado && !SocioSeleccionado.HasErrors));
+
+        private void Actualizar(Object obj)
+        {
+            var dialogVM = new AgregarEditarSocioDialogViewModel(SocioSeleccionado, _nombreConn);
+            var dialogWindow = new AgregarEditarSocioDialog(dialogVM);
+            dialogWindow.ShowDialog();
+            if(dialogWindow.DialogResult == true) { 
+
+            try
+            {
+                service.Actualizar(SocioSeleccionado);
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error(e, "Se produjo un error al actualizar el socio");
+            }
+
+                ActualizarSocios();
+            }
+        }
+
+        private ICommand printCommand = null;
+        public ICommand PrintCommand => printCommand ?? (printCommand = new RelayCommand(ExportarExcel));
+
+        private void ExportarExcel(Object obj)
+        {
+            try
+            {
+                service.GuardarExcel();
+                MessageBox.Show("Se ha exportado con éxito la lista de socios activos.","Club Irigoyense", MessageBoxButton.OK);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+
         #endregion
 
 

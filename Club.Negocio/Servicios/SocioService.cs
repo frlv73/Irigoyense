@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Club.Desktop.Util;
 
 namespace Club.Negocio.Servicios
 {
@@ -77,6 +78,19 @@ namespace Club.Negocio.Servicios
                 database.Socios.Actualizar(socio);
                 database.GuardarCambios();
             }
+        }
+
+        public void GuardarExcel()
+        {
+            IList<SocioViewModel> socios = null;
+            var mapeador = AutoMapperConfig.SocioToSocioVM.CreateMapper();
+            using (database = new EFUnitOfWork(_nombreConexion))
+            {
+               socios = mapeador.Map<ObservableCollection<SocioViewModel>>(database.Socios.Buscar(s => s.Estado != Data.Enums.EstadoSocio.Eliminado));
+            }
+
+            ViewModelToExcel export = new ViewModelToExcel();
+            export.ConvertirListaDeSociosExcel(socios);
         }
     }
 }

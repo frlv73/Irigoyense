@@ -11,5 +11,6 @@ namespace Club.Negocio.Interfaces
     public interface ISocioService : IBaseService<SocioViewModel>
     {
         ObservableCollection<SocioViewModel> BuscarSociosActivos();
+        void GuardarExcel();
     }
 }

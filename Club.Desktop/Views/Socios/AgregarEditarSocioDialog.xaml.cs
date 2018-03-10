@@ -18,16 +18,16 @@ namespace Club.Desktop.Views.Socios
     /// <summary>
     /// Interaction logic for AgregarClienteDialog.xaml
     /// </summary>
-    public partial class AgregarSocioDialog : Window
+    public partial class AgregarEditarSocioDialog : Window
     {
-        private AgregarSocioDialogViewModel _vm;
+        private AgregarEditarSocioDialogViewModel _vm;
 
-        public AgregarSocioDialog()
+        public AgregarEditarSocioDialog()
         {
             InitializeComponent();
         }
 
-        public AgregarSocioDialog(AgregarSocioDialogViewModel vm)
+        public AgregarEditarSocioDialog(AgregarEditarSocioDialogViewModel vm) : this()
         {
             _vm = vm;
             DataContext = _vm;

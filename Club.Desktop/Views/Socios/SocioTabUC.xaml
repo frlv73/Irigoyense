@@ -13,21 +13,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            
             <RowDefinition Height="auto"/>
+            
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
         <Label Content="Tabla Socios" HorizontalAlignment="Center" Foreground="WhiteSmoke"/>
         <Separator></Separator>
         </StackPanel>
         <DataGrid
-            x:Name="gridSocios"
+            x:Name="GridSocios"
             Grid.Row="1"
             ItemsSource="{Binding Path=SocioVM.Socios}"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
             IsReadOnly="True"
-            SelectedItem="{Binding Path=SocioVM, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+            SelectedItem="{Binding Path=SocioVM.SocioSeleccionado, UpdateSourceTrigger=PropertyChanged}"
             SelectionMode="Single"
             
             >
@@ -44,7 +44,7 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <DockPanel Grid.Row="2"  DataContext="{Binding Path=ClientVM}" Height="50" Margin="0,5,0,5">
+        <DockPanel Grid.Row="2"  DataContext="{Binding Path=SocioVM}" Height="50" Margin="0,5,0,5">
             <DockPanel.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Margin" Value="2,0,2,0"/>
@@ -58,12 +58,12 @@
                 </Style>
             </DockPanel.Resources>
             <Button  HorizontalAlignment="Left" ToolTip="Generar cuotas de socio"  Command="{Binding AddCommand}">Generar Cuotas</Button>
-            <Button  HorizontalAlignment="Left" ToolTip="Imprimir lista de socios"  Command="{Binding AddCommand}">Imprimir Lista</Button>
+            <Button  HorizontalAlignment="Left" ToolTip="Imprimir lista de socios"  Command="{Binding PrintCommand}">Imprimir Lista</Button>
             <Button  DockPanel.Dock="Right" ToolTip="Agregar un socio"  Command="{Binding AddCommand}">Nuevo</Button>
-            <Button  HorizontalAlignment="Right" ToolTip="Eliminar socio seleccionado"  Command="{Binding DeleteCommand}"> Eliminar</Button>
-            <!--<Button ToolTip="Изменить клиента" Command="{Binding EditCommand}">
-                        <Image Source="..\..\Icons\Change_Icon.png" Width="30"/>
-                    </Button>-->
+            <Button  DockPanel.Dock="Right" ToolTip="Editar datos del socio seleccionado"  Command="{Binding EditCommand}">Modificar</Button>
+            <Button  HorizontalAlignment="Right" ToolTip="Eliminar socio seleccionado"  Command="{Binding DeleteCommand}">Eliminar</Button>
         </DockPanel>
+
+
     </Grid>
 </UserControl>
